@@ -73,6 +73,8 @@ register.addEventListener('change', (event) => {
 	`<p>Total: $${totalCost}</p>`;
 });
 
+
+
 // PAYMENT SECTION
 const payment = document.querySelector('#payment');
 const credit = document.querySelector('#credit-card');
@@ -114,7 +116,22 @@ const cardNumber = document.querySelector('#cc-num');
 const zipCode = document.querySelector('#zip');
 const cvv = document.querySelector('#cvv');
 const form = document.querySelector('form');
-const activitySection = document.querySelector('#activities-box')
+const activitySection = document.querySelector('#activities-box');
+const hint = document.querySelectorAll('.hint');
+
+// ACTIVITIES SECTION
+
+// Listens for when each activity is in focus and adds or removes the focus class accordingly
+const activity = document.querySelectorAll('input[type="checkbox"]');
+for (let i = 0; i < activity.length; i++) {
+	activity[i].addEventListener('focus', (event) => {
+		event.target.parentElement.classList.add('focus');
+	});
+	activity[i].addEventListener('blur', (event) => {
+		event.target.parentElement.classList.remove('focus');
+	});
+};
+
 
 /*	If a required section is valid the 'valid' class will be added
 	and the other class will be removed, and the error will be hidden
@@ -122,7 +139,9 @@ const activitySection = document.querySelector('#activities-box')
 function validationPass(element) {
 	element.parentElement.classList.add('valid');
   	element.parentElement.classList.remove('not-valid');
-  	element.parentElement.lastElementChild.hidden = true;
+  	for (let i = 0; i < hint.length; i++) {
+  		hint[i].style.display = 'none';
+  	}
 };
 /*	If the required field is not valid the 'not-valid' class will
 	be added and the other class removed, and the error will show
@@ -130,7 +149,9 @@ function validationPass(element) {
 function validationFail(element) {
   element.parentElement.classList.add('not-valid');
   element.parentElement.classList.remove('valid');
-  element.parentElement.lastElementChild.hidden = false;
+  for (let i = 0; i < hint.length; i++) {
+  		hint[i].style.display = 'block';
+  	}
 };
 
 
@@ -192,7 +213,9 @@ function activitiesValid() {
 	} else {
 		validationFail(activitySection);
 	}
-}
+	return totalCost;
+};
+
 
 
 /*	Listens for submission of the form
@@ -220,16 +243,3 @@ form.addEventListener('submit', (event) => {
 	}
 });
 
-
-// ACTIVITIES SECTION
-
-// Listens for when each activity is in focus and adds or removes the focus class accordingly
-const activity = document.querySelectorAll('input[type="checkbox"]');
-for (let i = 0; i < activity.length; i++) {
-	activity[i].addEventListener('focus', (event) => {
-		event.target.parentElement.classList.add('focus');
-	});
-	activity[i].addEventListener('blur', (event) => {
-		event.target.parentElement.classList.remove('focus');
-	});
-};
