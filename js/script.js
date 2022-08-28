@@ -217,7 +217,6 @@ function activitiesValid() {
 };
 
 
-
 /*	Listens for submission of the form
 	And prevents the form from submitting if any of the required fields
 	are missing or filled out incorrectly
@@ -229,17 +228,15 @@ form.addEventListener('submit', (event) => {
 	if (!isValidEmail()) {
 		event.preventDefault();
 	}
-	if (!isValidCardNumber()) {
-		event.preventDefault();
-	}
-	if (!isValidZip()) {
-		event.preventDefault();
-	}
-	if (!isValidCVV()) {
-		event.preventDefault();
-	}
 	if (!activitiesValid()) {
 		event.preventDefault();
+	}
+	if (payment[1].selected) {
+		if (!isValidCardNumber() || 
+			!isValidZip() ||
+			!isValidCVV()) {
+				event.preventDefault();
+		} 
 	}
 });
 
